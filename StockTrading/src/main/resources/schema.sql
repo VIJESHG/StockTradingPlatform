@@ -5,14 +5,15 @@ drop table Company if exists;
 create table Sector(
 	sec_id int(11) not null PRIMARY KEY,
 	name varchar(16) not null unique,
-	descr varchar(40),
+	descr varchar(40)
 	
 );
 
 create table Company(
 	ticker varchar(8) not null PRIMARY KEY,
 	name varchar(32) not null,
-	sec_id int(11) foreign key references Sector(sec_id)
+	sec_id int(11),
+	foreign key(sec_id) references Sector(sec_id)
 );
 
 create table Trader(
