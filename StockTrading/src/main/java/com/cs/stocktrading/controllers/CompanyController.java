@@ -33,7 +33,7 @@ public class CompanyController {
 		return cmp.create(c);
 	}
 	
-	@RequestMapping(value="/company/{ticker}",method=RequestMethod.POST)
+	@RequestMapping(value="/company/delete/{ticker}",method=RequestMethod.POST)
 	public List<Company> delete(@PathVariable String ticker){
 		return cmp.delete(ticker);
 	}

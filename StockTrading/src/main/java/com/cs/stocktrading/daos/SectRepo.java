@@ -9,6 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.cs.stocktrading.daos.CompRepo.CompanyRowMapper;
+import com.cs.stocktrading.domains.Company;
 import com.cs.stocktrading.domains.Sector;
 
 @Repository
@@ -35,6 +38,12 @@ public class SectRepo {
 		return sect;
 	}
 	
+	public List<Sector> update(final int sec_id, final Sector s){
+		final String sql = "update sector set name=?,descr=? where sec_id=?";
+		jdbcTemplate.update(sql,s.getName(),s.getDescr(),sec_id);
+		return jdbcTemplate.query("select * from sector", new SectorRowMapper());
+	}
+
 	public List<Sector> delete(final int sec_id){
 		final String sql = "delete from sector where sec_id=?";
 		jdbcTemplate.update(sql,sec_id);

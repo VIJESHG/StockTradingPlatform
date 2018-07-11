@@ -21,4 +21,15 @@ public class CompanyService {
 		return crepo.findCompanyByTicker(ticker);
 	}
 	
+	public Company create(final Company cmp) {
+		return crepo.create(cmp);
+	}
+	
+	public List<Company> delete(final String ticker){
+		return crepo.delete(ticker);
+	}
+	
+	public List<Company> update(final String ticker, final Company cmp){
+		return crepo.update(ticker, cmp);
+	}	
 }

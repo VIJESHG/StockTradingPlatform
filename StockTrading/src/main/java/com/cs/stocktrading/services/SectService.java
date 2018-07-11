@@ -19,4 +19,17 @@ public class SectService {
 		return srepo.findSectorById(sec_id);
 	}
 	
+	public Sector create(final Sector sect) {
+		return srepo.create(sect);
+	}
+	
+	public List<Sector> update(final int sec_id, final Sector s){
+		return srepo.update(sec_id, s);
+	}
+	
+	public List<Sector> delete(final int sec_id){
+		return srepo.delete(sec_id);
+	}
+
+	
 }

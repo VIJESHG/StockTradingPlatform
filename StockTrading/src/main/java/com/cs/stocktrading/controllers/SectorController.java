@@ -33,9 +33,13 @@ public class SectorController {
 		return sect.create(s);
 	}
 	
-	@RequestMapping(value="/sector/{sec_id}",method=RequestMethod.POST)
+	@RequestMapping(value="/sector/delete/{sec_id}",method=RequestMethod.POST)
 	public List<Sector> delete(@PathVariable int sec_id){
 		return sect.delete(sec_id);
 	}
 	
+	@RequestMapping(value="/sector/update/{sec_id}",method=RequestMethod.POST)
+	public List<Sector> update(@PathVariable int sec_id, @RequestBody Sector s){
+		return sect.update(sec_id,s);
+	}
 }

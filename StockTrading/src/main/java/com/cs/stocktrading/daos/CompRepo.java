@@ -26,7 +26,7 @@ public class CompRepo {
 	@Transactional(readOnly=true)
 	public Company findCompanyByTicker(String ticker) {
 		return jdbcTemplate.queryForObject(
-				"select * from company where ticker like ?", 
+				"select * from company where ticker like ? || '%'", 
 				new Object[] {ticker}, new CompanyRowMapper());
 	}
 	
