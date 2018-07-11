@@ -34,10 +34,13 @@ public class CompanyController {
 	}
 	
 	@RequestMapping(value="/company/{ticker}",method=RequestMethod.POST)
-	public List<Company> create(@PathVariable String ticker){
+	public List<Company> delete(@PathVariable String ticker){
 		return cmp.delete(ticker);
 	}
 	
-	
+	@RequestMapping(value="/company/update/{ticker}",method=RequestMethod.POST)
+	public List<Company> update(@PathVariable String ticker, @RequestBody Company c){
+		return cmp.update(ticker,c);
+	}
 	
 }

@@ -26,7 +26,7 @@ public class CompRepo {
 	@Transactional(readOnly=true)
 	public Company findCompanyByTicker(String ticker) {
 		return jdbcTemplate.queryForObject(
-				"select * from company where ticker=?", 
+				"select * from company where ticker like ?", 
 				new Object[] {ticker}, new CompanyRowMapper());
 	}
 	
@@ -41,7 +41,12 @@ public class CompRepo {
 		jdbcTemplate.update(sql,ticker);
 		return jdbcTemplate.query("select * from company", new CompanyRowMapper());
 	}
-	
+	public List<Company> update(final String ticker, final Company cmp){
+		final String sql = "update company set name=?,sec_id=? where ticker=?";
+		jdbcTemplate.update(sql,cmp.getName(),cmp.getSec_id(),ticker);
+		return jdbcTemplate.query("select * from company", new CompanyRowMapper());
+	}
+
 	class CompanyRowMapper implements RowMapper<Company>{
 		
 		@Override
