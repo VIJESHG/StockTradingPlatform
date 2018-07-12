@@ -32,4 +32,47 @@ public class OrderService {
 	{
 	return od.listOrderByTrader(trader_id);
 	}
+	public List<Order> getOrderByStatus(String status){
+		return od.getOrderByStatus(status);
+		
+	}
+	public List<Order> getOrderByTicker(String ticker){
+		return od.getOrderByTicker(ticker);		
+	}
+	public List<Order> getOrderByQuantity(int from,int to){
+		return od.getOrderByQuantity(from,to);		
+	}
+	public List<Order> getOrderByTime(int from,int to){
+		return od.getOrderByTime(from,to);		
+	}
+	public List<Order> sortByTicker(String sort){
+		return od.sortByTicker(sort);
+	}
+	public List<Order> sortByPrice(String sort){
+		return od.sortByPrice(sort);
+	}
+	public List<Order> listOrderByOrderSide()
+	{
+	return od.listOrderByOrderSide();
+	}
+
+	public List<Order> listOrderByOrderSideBuySell(String request1)
+	{
+	return od.listOrderByOrderSideBuySell(request1);
+	}
+
+	public List<Order> listOrderByOrderType()
+	{
+	return od.listOrderByOrderType();
+	}
+
+	public List<Order> listOrderByOrderTypeMarketLimit(String order_type)
+	{
+	return od.listOrderByOrderTypeMarketLimit(order_type);
+	}
+
+	public List<Order> listOrderByStatus()
+	{
+	return od.listOrderByStatus();
+	}
 }

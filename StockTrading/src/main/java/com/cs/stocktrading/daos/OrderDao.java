@@ -20,6 +20,7 @@ import com.cs.stocktrading.enums.Status;
 @Repository
 public class OrderDao {
 
+
 	@Autowired
 	JdbcTemplate jdbctemplate;
 	
@@ -46,6 +47,8 @@ public class OrderDao {
 					new Timestamp(System.currentTimeMillis()),"CANCEL",o1.getPrice(),
 					o1.getNumberOfShares(),o1.getOrder_type());
 			
+			 String sql1="Update Trader Set live_ords=live_ords-1";
+			 jdbctemplate.update(sql1);
 			return "Order Cancelled successfully";
 		}
 	}
@@ -97,6 +100,8 @@ public class OrderDao {
 		jdbctemplate.update(insertTransaction,orderId,order.getTrader_id(),
 				new Timestamp(System.currentTimeMillis()),"CREATE",order.getPrice(),
 				order.getNumberOfShares(),order.getOrder_type());
+		String sql1="Update Trader Set live_ords=live_ords+1";
+		jdbctemplate.update(sql1);
 		
 		return orderId;
 
@@ -106,6 +111,69 @@ public class OrderDao {
 	{
 	String sql="Select * from Orders where trader_id=?";
 	return jdbctemplate.query(sql,new OrderMapper(),trader_id);
+
+	}
+	
+	public List<Order> getOrderByStatus(String status){
+		final String query="select * from orders where status=?";
+		return jdbctemplate.query(query,new Object[] {status},new OrderMapper());
+		
+	}
+	
+	public List<Order> getOrderByTicker(String ticker){
+		final String query="select * from orders where ticker=?";
+		return jdbctemplate.query(query,new Object[] {ticker},new OrderMapper());
+		
+	}
+	
+	public List<Order> getOrderByQuantity(int from,int to){
+		final String query="select * from orders where num_of_shares BETWEEN ? AND ?";
+		return jdbctemplate.query(query,new Object[] {from,to},new OrderMapper());
+	}
+	public List<Order> getOrderByTime(int from,int to){
+		final String query="select * from orders where time_stamp BETWEEN ? AND ?";
+		return jdbctemplate.query(query,new Object[] {from,to},new OrderMapper());
+	}
+	public List<Order> sortByTicker(String sort){
+		final String query="select * from orders ORDER BY ticker "+sort;
+		return jdbctemplate.query(query,new OrderMapper());
+	}
+	public List<Order> sortByPrice(String sort){
+		final String query="select * from orders ORDER BY price "+sort;
+		return jdbctemplate.query(query,new OrderMapper());
+	}
+	public List<Order> listOrderByOrderSide()
+	{
+	String sql="Select * from Orders group by request";
+	return jdbctemplate.query(sql,new OrderMapper());
+
+	}
+
+	public List<Order> listOrderByOrderSideBuySell(String request1)
+	{
+	String sql="Select * from Orders where request=?";
+	return jdbctemplate.query(sql,new OrderMapper(),request1);
+
+	}
+
+	public List<Order> listOrderByOrderType()
+	{
+	String sql="Select * from Orders group by order_type";
+	return jdbctemplate.query(sql,new OrderMapper());
+
+	}
+
+	public List<Order> listOrderByOrderTypeMarketLimit(String order_type)
+	{
+	String sql="Select * from Orders where order_type=?";
+	return jdbctemplate.query(sql,new OrderMapper(),order_type);
+
+	}
+
+	public List<Order> listOrderByStatus()
+	{
+	String sql="Select * from Orders group by status";
+	return jdbctemplate.query(sql,new OrderMapper());
 
 	}
 }
@@ -135,24 +203,3 @@ class OrderMapper implements RowMapper<Order>
 	}
 	
 }
-
-//class OrderMapper implements RowMapper<Order>
-//{
-//
-//@Override
-//public Order mapRow(ResultSet rs, int arg1) throws SQLException {
-//// TODO Auto-generated method stub
-//Order order = new Order();
-//order.setOrder_id(rs.getInt("order_id"));
-//order.setNumberOfShares(rs.getInt("num_of_shares"));
-//order.setOrder_id(rs.getInt("order_id"));
-//order.setOrder_type(rs.getString("order_type"));
-//order.setPrice(rs.getInt("price"));
-//order.setRequest(rs.getString("request"));
-//order.setStatus(rs.getString("status"));
-//order.setTicker(rs.getString("ticker"));
-//order.setTime_stamp(rs.getTimestamp("time_stamp"));
-//return order;
-//}
-//
-//}
