@@ -2,6 +2,7 @@ drop table Trader if exists;
 drop table Sector if exists;
 drop table Company if exists;
 drop table Orders if exists;
+drop table Transaction if exists;
 
 
 
@@ -30,13 +31,26 @@ create table Trader(
 
 
 create table Orders(
-	order_id int(11) not null PRIMARY KEY AUTO_INCREMENT,
-	ticker varchar(8) not null,
-	request ENUM('BUY','SELL'),
-	order_type ENUM('LIMIT','MARKET'),
+order_id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+ticker varchar(8) not null,
+request varchar(32) not null,
+order_type varchar(32) not null,
+price int(11),
+num_of_shares int(11) not null,
+trader_id int(11) not null,
+status varchar(32) not null,
+time_stamp TIMESTAMP not null,
+foreign key(trader_id) references Trader(trad_id),
+foreign key (ticker) references Company(ticker)
+);
+
+create table Transaction(
+	trans_id int(11) not null PRIMARY KEY AUTO_INCREMENT,
+	order_id int(11) not null,
+	trader_id int(11) not null,
+	time_stamp TIMESTAMP not null,
+	status varchar(32) not null,
 	price int(11),
 	num_of_shares int(11) not null,
-	status ENUM('PENDING','COMPLETED','CANCELLED'),
-	time_stamp TIMESTAMP not null,
-	foreign key (ticker) references Company(ticker)
+	order_type varchar(32) not null
 );

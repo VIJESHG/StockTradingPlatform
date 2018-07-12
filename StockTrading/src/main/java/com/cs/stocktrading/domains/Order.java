@@ -2,18 +2,14 @@ package com.cs.stocktrading.domains;
 
 import java.sql.Timestamp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 public class Order {
-	private int order_id,price,numberOfShares,trader_id;
-	public int getTrader_id() {
-		return trader_id;
-	}
-	public void setTrader_id(int trader_id) {
-		this.trader_id = trader_id;
-	}
+	private int order_id, price, numberOfShares,trader_id;
 	private String ticker;
 	private String status;
 	private String order_type;
 	private String request;
+	@Autowired
 	private Timestamp time_stamp;
 	public int getOrder_id() {
 		return order_id;
@@ -32,6 +28,12 @@ public class Order {
 	}
 	public void setNumberOfShares(int numberOfShares) {
 		this.numberOfShares = numberOfShares;
+	}
+	public int getTrader_id() {
+		return trader_id;
+	}
+	public void setTrader_id(int trader_id) {
+		this.trader_id = trader_id;
 	}
 	public String getTicker() {
 		return ticker;
@@ -63,14 +65,6 @@ public class Order {
 	public void setTime_stamp(Timestamp time_stamp) {
 		this.time_stamp = time_stamp;
 	}
-	
-	@Override
-	public String toString() {
-		return "Order [order_id=" + order_id + ", price=" + price + ", numberOfShares=" + numberOfShares
-				+ ", trader_id=" + trader_id + ", ticker=" + ticker + ", status=" + status + ", order_type="
-				+ order_type + ", request=" + request + ", time_stamp=" + time_stamp + "]";
-	}
-	
 	public Order(int order_id, int price, int numberOfShares, int trader_id, String ticker, String status,
 			String order_type, String request, Timestamp time_stamp) {
 		super();
@@ -87,5 +81,11 @@ public class Order {
 	public Order() {
 		super();
 	}
-	
+	@Override
+	public String toString() {
+		return "Order [order_id=" + order_id + ", price=" + price + ", numberOfShares=" + numberOfShares
+				+ ", trader_id=" + trader_id + ", ticker=" + ticker + ", status=" + status + ", order_type="
+				+ order_type + ", request=" + request + ", time_stamp=" + time_stamp + "]";
+	}	
+
 }

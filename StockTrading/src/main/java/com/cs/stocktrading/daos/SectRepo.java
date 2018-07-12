@@ -40,7 +40,7 @@ public class SectRepo {
 	
 	public List<Sector> update(final int sec_id, final Sector s){
 		final String sql = "update sector set name=?,descr=? where sec_id=?";
-		jdbcTemplate.update(sql,s.getName(),s.getDescr(),sec_id);
+		jdbcTemplate.update(sql,sec_id,s.getName(),s.getDescr(),s.getName(),s.getDescr());
 		return jdbcTemplate.query("select * from sector", new SectorRowMapper());
 	}
 
