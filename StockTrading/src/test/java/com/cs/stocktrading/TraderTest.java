@@ -18,7 +18,9 @@ import com.cs.stocktrading.domains.Trader;
 @SpringBootTest
 public class TraderTest {
 	
-	private Trader tradCreate;	
+	private Trader tradCreate;
+	private Trader tradDelete;
+	private int trad_id;
 	
 	@Autowired
 	TraderDao trad;
@@ -28,7 +30,9 @@ public class TraderTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		tradCreate = new Trader(2,0,1,"vij","abc@gmail.com","assdhffheril"); 
+		tradCreate = new Trader(2,0,1,"vij","abc@gmail.com","assdhffheril");
+		tradDelete = new Trader(3,0,1,"Briju", "brij@gmail", "VIman Naahar, Pune");
+		trad_id = 3;
 	}
 
 	@After
@@ -43,6 +47,28 @@ public class TraderTest {
 		int c2 = jdbcTemplate.queryForObject("select count(*) from trader", Integer.class);
 		assertEquals(c1, c2 - 1);
 	}
-	
+	@Test
+	public void getTraderByIdTest() {
+		trad.create(tradCreate);
+		int c1 = jdbcTemplate.queryForObject("select count(*) from trader where trad_id=?", new Object[] {trad_id}, Integer.class);
+		assertEquals(c1,1);
+	}
 		
+	@Test
+	public void deleteTraderTest() {
+		trad.create(tradDelete);
+		int c1 = jdbcTemplate.queryForObject("select count(*) from trader", Integer.class);
+		trad.deleteTrader(trad_id);
+		int c2 = jdbcTemplate.queryForObject("select count(*) from trader", Integer.class);
+		assertEquals(c2,c1);		
+	}
+	
+	@Test
+	public void findAllTest() {
+		int c1 = trad.findAll().size();
+		trad.create(tradCreate);
+		trad.create(tradDelete);
+		int c2 = trad.findAll().size();
+		assertEquals(c1+2, c2);
+	}
 }
